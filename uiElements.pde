@@ -1,5 +1,4 @@
 public class SnakeUiElements {
-
     public void showStartScreen() {
         background(#999999); // somewhat gray
         translate(width/2, height/2);

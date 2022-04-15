@@ -1,13 +1,13 @@
 public class Food {
     private PVector pos;
-    private boolean eaten;
+    private PImage spriteFood;
 
     Food(int fields) {
+        spriteFood = loadImage("img/food.png");
         this.pos = new PVector(
             (int) random(0,fields),
             (int) random(0,fields)
         );
-        this.eaten = false;
     }
 
     public PVector getPos() {
@@ -15,15 +15,21 @@ public class Food {
     }
 
     public void draw(int size) {
-        fill(#FF0000); //red
-        noStroke();
-        ellipseMode(CORNER);
-        ellipse(this.pos.x*size, this.pos.y*size, size, size);
+
+        image(spriteFood, this.pos.x*size, this.pos.y*size, size, size);
     }
 
-    public boolean getEaten() { return eaten; }
+    public String toString() { return "Food"; } 
+}
 
-    public void setEaten(boolean x) {
-        this.eaten = x;
+public class Reverser extends Food {
+    Reverser(int fields) {
+        super(fields);
     }
+
+    public void effect() {
+        println("Magic");
+    }
+
+    public String toString() { return "Reverser"; } 
 }

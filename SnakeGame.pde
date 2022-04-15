@@ -6,15 +6,15 @@ int fields = 25;
 boolean playing = false;
 boolean collide = false;
 boolean paused = false;
-boolean eaten;
+boolean eaten = false;
 
 int score;
 
 
 void setup() {
-    size(500,500);
+    size(800,800);
     frameRate(60);
-    ui = new snakeUiElements();
+    ui = new SnakeUiElements();
 }
 
 void draw () {
@@ -23,18 +23,18 @@ void draw () {
 }
 
 void keyPressed() {
-    if (playing && !collide) {  sn.changeDirection(); }
+    if (playing && !collide) { sn.changeDirection(); }
     handlePlayPause();
 }
 
 
 // GAME METHODS
-
 public void playGame() {
     if (frameCount % sn.getSpeed() == 0) {
         background(#FFFFFF); // white
 
         if (!paused && !collide) { sn.update(); }
+
         fd.draw((int) width/fields);
         sn.draw((int) width/fields);
         ui.showScore();
@@ -83,14 +83,18 @@ public void handlePlayPause() {
 public void handleSpeedChange() {
     if (score < 20 && score % 5 == 0) { sn.incSpeed();}
     else if (score < 60 && score % 10 == 0) { sn.incSpeed();} 
-    else if ( score < 140 && score % 20 == 0) { sn.incSpeed();}
-    else if ( score >= 140 && score % 40 == 0) { sn.incSpeed(); }
+    else if ( score < 120 && score % 20 == 0) { sn.incSpeed();}
+    else if ( score >= 120 && score % 40 == 0) { sn.incSpeed(); }
     else { }
 }
 
 public void handleEaten() {
     if (eaten) { 
-        fd = new Food(fields); 
+        if (random(0,1) >= 0.5) {
+            fd = new Food(fields); 
+        } else {
+            fd = new Reverser(fields); 
+        }
         score++;
         handleSpeedChange();
     }
